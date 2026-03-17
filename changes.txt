@@ -1,0 +1,27 @@
+Purchase Table
+- Term change from numeric to chars
+- po_post change to NoNull default to 0
+- add po_add1, po_add2, po_add3, po_add4
+
+Sales Table
+- Term change from numeric to chars
+- sls_post change to NoNull default to 0
+
+
+Sales Details Table
+- sld_desc change to sld_desp
+  add sld_brand
+
+Payment Detl Table
+- change name to payment_detls from payment_detl
+
+Receipt Details Table
+- change name to receipt_detls from receipt_detl
+
+Payment_detls Table
+- change payd_apid from integer to string
+
+Receipt_detls Table
+- change rcpd_apid from integer to string
+- add rcpd_paydate
+
