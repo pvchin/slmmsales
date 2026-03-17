@@ -24,6 +24,7 @@ import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useCustomToast } from '../helpers/useCustomToast';
 import { useUsers } from '../react-query/users/useUsers';
+import { Toast } from '../helpers/CustomToastify';
 import useLocalStorageState from 'use-local-storage-state';
 import { user_localstorage_key } from '../utils/constants';
 import ReactEncrypt from 'react-encrypt';
@@ -62,22 +63,24 @@ const SignIn = () => {
   const decryptData = text => {};
 
   const handleSignIn = data => {
-    const user = users.filter(r => r.userid === data.userid);
-    const { pw } = user[0];
-    const cipherText = CryptoJS.AES.encrypt(data.password, secretPass);
+    const user = users && users.filter(r => r.userid === data.userid);
 
-    const decrptText = CryptoJS.AES.decrypt(pw, secretPass).toString(
-      CryptoJS.enc.Utf8
-    );
+    if (user && user.length > 0) {
+      const { pw, name } = user[0];
 
-    console.log('decrpttext', decrptText);
-    if (data.password !== pw) {
-      toast({
-        title: 'Invalid UserId / Password',
+      if (data.password !== pw) {
+        Toast({
+          title: 'Invalid UserId / Password',
+          status: 'warning',
+        });
+      } else {
+        setLocalState({ userid: data.userid, name: name });
+      }
+    } else {
+      Toast({
+        title: 'Invalid UserId',
         status: 'warning',
       });
-    } else {
-      setLocalState(data);
     }
   };
 
